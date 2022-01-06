@@ -22,6 +22,17 @@ Build Typescript source and run Electron using:
     npm start
 
 
+## Build app
+
+Build production app file using:
+
+    npm run dist
+
+Unpack the app build to see the included files using:
+
+    npm run dist:unpack
+
+
 ## Contact
 
 For more information please contact kmturley
