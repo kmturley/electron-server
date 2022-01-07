@@ -3,7 +3,7 @@ import * as path from "path"
 
 const app = express()
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "renderer")));
 
 app.get('/api', (req: any, res: any) => {
   res.json({ date: new Date() })

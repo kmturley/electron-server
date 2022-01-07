@@ -5,19 +5,24 @@
   "main": "main/index.js",
   "scripts": {
     "clean": "rimraf dist main",
-    "build": "npm run clean && tsc && npm run copy",
-    "copy": "rsync --relative ./src/./**/*.html ./main",
-    "watch": "tsc -w",
-    "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron ./main/index.js",
+    "dev": "npm run build && electron .",
+    "build-renderer": "tsc -p renderer",
+    "build-electron": "tsc -p electron-src",
+    "build": "npm run clean && npm run build-renderer && npm run build-electron && npm run copy",
+    "pack-app": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder",
     "dist:debug": "lldb ./dist/mac/electron-quick-start-typescript.app",
-    "dist:unpack": "npx asar extract ./dist/mac/electron-quick-start-typescript.app/Contents/Resources/app.asar ./dist/unpack"
+    "dist:unpack": "npx asar extract ./dist/mac/electron-quick-start-typescript.app/Contents/Resources/app.asar ./dist/unpack",
+    "copy": "rsync --relative ./renderer/*.html ./main",
+    "watch": "tsc -p renderer -w ",
+    "lint": "eslint -c .eslintrc --ext .ts ./electron-src",
+    "start": "npm run build && electron ./main/index.js"
   },
   "build": {
     "asar": true,
     "files": [
-      "main"
+      "main",
+      "renderer/out"
     ]
   },
   "repository": "https://github.com/electron/electron-quick-start-typescript",

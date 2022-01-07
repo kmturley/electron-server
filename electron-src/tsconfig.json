@@ -3,13 +3,13 @@
     "module": "commonjs",
     "noImplicitAny": true,
     "sourceMap": true,
-    "outDir": "main",
+    "outDir": "../main",
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*"]
+      "*": ["../node_modules/*"]
     }
   },
   "include": [
-    "src/**/*"
+    "./**/*"
   ]
 }
