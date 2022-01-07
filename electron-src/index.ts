@@ -1,15 +1,27 @@
 // Native
 import { join } from 'path'
-import { format } from 'url'
 
 // Packages
 import { BrowserWindow, app, ipcMain, IpcMainEvent } from 'electron'
 import isDev from 'electron-is-dev'
-import prepareNext from 'electron-next'
+
+import { createServer } from 'http'
+import { parse } from 'url'
+import next from 'next'
+
+const nextApp = next({ dev: isDev, dir: './renderer' })
+const handle = nextApp.getRequestHandler()
 
 // Prepare the renderer once the app is ready
 app.on('ready', async () => {
-  await prepareNext('./renderer', 3000)
+  await nextApp.prepare();
+
+  createServer((req: any, res: any) => {
+    const parsedUrl = parse(req.url, true)
+    handle(req, res, parsedUrl)
+  }).listen(3000, () => {
+    console.log('> Ready on http://localhost:3000')
+  })
 
   const mainWindow = new BrowserWindow({
     width: 800,
@@ -21,15 +33,7 @@ app.on('ready', async () => {
     },
   })
 
-  const url = isDev
-    ? 'http://localhost:3000/'
-    : format({
-        pathname: join(__dirname, '../renderer/out/index.html'),
-        protocol: 'file:',
-        slashes: true,
-      })
-
-  mainWindow.loadURL(url)
+  mainWindow.loadURL('http://localhost:3000/')
 })
 
 // Quit the app once all windows are closed

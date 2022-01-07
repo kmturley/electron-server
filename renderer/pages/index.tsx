@@ -5,13 +5,17 @@ import Layout from '../components/Layout'
 const IndexPage = () => {
   useEffect(() => {
     // add a listener to 'message' channel
-    global.ipcRenderer.addListener('message', (_event, args) => {
-      alert(args)
-    })
+    if (global && global.ipcRenderer) {
+      global.ipcRenderer.addListener('message', (_event, args) => {
+        alert(args)
+      })
+    }
   }, [])
 
   const onSayHiClick = () => {
-    global.ipcRenderer.send('message', 'hi from next')
+    if (global && global.ipcRenderer) {
+      global.ipcRenderer.send('message', 'hi from next')
+    }
   }
 
   return (
