@@ -1,18 +1,13 @@
-const expressVersion = require('express/package').version;
+/* eslint-disable @typescript-eslint/no-namespace */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { ipcRenderer, IpcRenderer } from 'electron'
 
-// All of the Node.js APIs are available in the preload process.
-// It has the same sandbox as a Chrome extension.
-window.addEventListener("DOMContentLoaded", () => {
-  const replaceText = (selector: string, text: string) => {
-    const element = document.getElementById(selector);
-    if (element) {
-      element.innerText = text;
-    }
-  };
+declare global {
+  var ipcRenderer: IpcRenderer
+}
 
-  for (const type of ["chrome", "node", "electron"]) {
-    replaceText(`${type}-version`, process.versions[type as keyof NodeJS.ProcessVersions]);
-  }
-
-  replaceText(`express-version`, expressVersion);
-});
+// Since we disabled nodeIntegration we can reintroduce
+// needed node functionality here
+process.once('loaded', () => {
+  global.ipcRenderer = ipcRenderer
+})
