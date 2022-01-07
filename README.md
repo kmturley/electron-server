@@ -5,7 +5,7 @@ Electron app with server-side rendering using:
 * NodeJS 12.x
 * Electron 16.x
 * Typescript 4.x
-* Express 4.x
+* Next 12.x
 
 
 ## Installation
