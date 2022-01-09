@@ -33,7 +33,7 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "@types/express": "^4.17.13",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^4.33.0",
     "electron": "^16.0.6",
     "electron-builder": "^22.14.5",
