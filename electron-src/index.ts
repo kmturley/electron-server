@@ -9,7 +9,7 @@ import { createServer } from 'http'
 import { parse } from 'url'
 import next from 'next'
 
-const nextApp = next({ dev: isDev, dir: './renderer' })
+const nextApp = next({ dev: isDev, dir: app.getAppPath() + '/renderer' })
 const handle = nextApp.getRequestHandler()
 
 // Prepare the renderer once the app is ready
